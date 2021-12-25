@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import curses
+
+from util import curses_color, get_config
+
+from classes.Engine import Engine
+
+def initialize_curses_environment(stdscr):
+    stdscr.keypad(True)
+    curses.curs_set(0)
+
+def initialize_color_pairs(config):
+    curses.use_default_colors()
+    background = -1 # Transparent background
+    curses.init_pair( 1, curses_color(config["ForegroundColor"]), background)
+    curses.init_pair( 2, curses_color(config["AccentColor"]), background)
+    curses.init_pair( 3, curses_color(config["SelectionColor"]), background)
+
+def main(stdscr):
+    config = get_config()
+    initialize_curses_environment(stdscr)
+    initialize_color_pairs(config)
+
+    engine = Engine(config, stdscr)
+    engine.run()
+
+# Begin curses mode
+curses.wrapper(main)
