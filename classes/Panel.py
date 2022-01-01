@@ -112,7 +112,10 @@ class ListPanel(Panel):
         # Translate any non-strings into strings
         strings = []
         for item in self.items:
-            strings.append(repr(item))
+            if not isinstance(item, str):
+                strings.append(repr(item))
+            else:
+                strings.append(item)
 
         # Draw items within moving frame
         attr = 0
